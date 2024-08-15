@@ -24,5 +24,5 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 end
-
-
+# Vite.js in Ruby, bringing joy to your JavaScript experience [https://github.com/ElMassimo/vite_ruby]
+gem "vite_rails", "~> 3.0"

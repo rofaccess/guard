@@ -7,5 +7,9 @@
   },
   "scripts": {
     "build:css": "sass ./app/assets/stylesheets/application.bulma.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "vite-plugin-ruby": "^5.0.0"
   }
 }
