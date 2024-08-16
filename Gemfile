@@ -26,3 +26,6 @@ group :development, :test do
 end
 # Vite.js in Ruby, bringing joy to your JavaScript experience [https://github.com/ElMassimo/vite_ruby]
 gem "vite_rails", "~> 3.0"
+
+# Operations research tools for Ruby [https://github.com/ankane/or-tools-ruby]
+gem "or-tools", "~> 0.12.0"
