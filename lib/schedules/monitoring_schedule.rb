@@ -1,12 +1,11 @@
 class MonitoringSchedule
-  private attr_reader :employees, :shifts, :assignments, :assigned_hours
-  private attr_writer :assigned_hours
+  private attr_accessor :employees, :shifts, :assignments, :assigned_hours
 
   def initialize(employees:, shifts:)
-    @employees = employees
-    @shifts = shifts
-    @assignments = []
-    @assigned_hours = 0
+    self.employees = employees
+    self.shifts = shifts
+    self.assignments = []
+    self.assigned_hours = 0
   end
 
   def create
@@ -39,15 +38,6 @@ class MonitoringSchedule
       end
     end
 
-    # max hours per person
-    # use seconds since model needs integers
-    vars_by_person.each do |j, vs|
-      max_hours = employees[j][:max_hours]
-      if max_hours
-        model.add(model.sum(vs.map { |v| v[:var] * shift_duration[v[:shift]] }) <= max_hours * 3600)
-      end
-    end
-
     # maximize hours assigned
     # could also include distance from max hours
     model.maximize(model.sum(vars.map { |v| v[:var] * shift_duration[v[:shift]] }))
@@ -67,7 +57,7 @@ class MonitoringSchedule
       end
     end
     # can calculate manually if objective changes
-    @assigned_hours = solver.objective_value / 3600.0
+    self.assigned_hours = solver.objective_value / 3600.0
   end
 
   def print_schedule
