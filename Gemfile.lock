@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/rofaccess/or-tools-ruby
+  revision: e81f797e1da88ab63a1dff242ca44bc71833661c
+  specs:
+    or-tools (0.12.0)
+      rice (>= 4.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -133,8 +140,6 @@ GEM
       racc (~> 1.4)
     nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
-    or-tools (0.12.0)
-      rice (>= 4.3)
     parallel (1.26.2)
     parser (3.3.4.2)
       ast (~> 2.4.1)
@@ -265,7 +270,7 @@ DEPENDENCIES
   brakeman
   cssbundling-rails
   debug
-  or-tools (~> 0.12.0)
+  or-tools (~> 0.12.0)!
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 7.2.0)

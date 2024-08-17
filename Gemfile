@@ -28,4 +28,4 @@ end
 gem "vite_rails", "~> 3.0"
 
 # Operations research tools for Ruby [https://github.com/ankane/or-tools-ruby]
-gem "or-tools", "~> 0.12.0"
+gem "or-tools", "~> 0.12.0", git: "https://github.com/rofaccess/or-tools-ruby"
