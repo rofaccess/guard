@@ -26,13 +26,13 @@ class MonitoringSchedule
     vars_by_person = vars.group_by { |v| v[:person] }
 
     # one person per shift
-    vars_by_shift.each do |j, vs|
+    vars_by_shift.each do |vs|
       model.add(model.sum(vs.map { |v| v[:var] }) <= 1)
     end
 
     # one shift per day per person
     # in future, may also want to add option to ensure assigned shifts are N hours apart
-    vars_by_person.each do |j, vs|
+    vars_by_person.each do |vs|
       vs.group_by { |v| shift_dates[v[:shift]] }.each do |_, vs2|
         model.add(model.sum(vs2.map { |v| v[:var] }) <= 1)
       end
@@ -45,7 +45,7 @@ class MonitoringSchedule
     # solve
     solver = ORTools::CpSolver.new
     status = solver.solve(model)
-    raise Error, "No solution found" unless [:feasible, :optimal].include?(status)
+    raise Error, "No solution found" unless [ :feasible, :optimal ].include?(status)
 
     # read solution
     vars.each do |v|
