@@ -10,6 +10,6 @@ class DaySchedule
     starts_at.strftime("%A")
   end
   def to_s
-    "#{starts_at.strftime("%H:%M")} - #{ends_at.strftime("%H:%M")}"
+    "#{day} #{starts_at.strftime("%H:%M")} - #{ends_at.strftime("%H:%M")}"
   end
 end

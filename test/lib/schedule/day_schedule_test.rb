@@ -6,8 +6,8 @@ class DayScheduleTest < ActiveSupport::TestCase
     assert_equal("Monday", new_day_schedule.day)
   end
 
-  test "Should get string range" do
-    assert_equal("19:00 - 00:00", new_day_schedule.to_s)
+  test "Should get full string range" do
+    assert_equal("Monday 19:00 - 00:00", new_day_schedule.to_s)
   end
 
   def new_day_schedule
