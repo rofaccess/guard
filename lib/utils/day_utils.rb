@@ -19,8 +19,6 @@ class DayUtils
       day_numbers[day_name]
     end
 
-    private
-
     # Devuelve un arreglo con los nombres de los días en inglés y capitalizados. Ej.: [ "Monday", "Tuesday", ...]
     def day_names
       # La constante DAYNAMES contiene un arreglo cuyo primer día de la semana es "Sunday". Llamando a rotate
@@ -35,6 +33,8 @@ class DayUtils
       #   y puede causar problemas si no se entiende bien que es lo que pasa de fondo. Comprobé este caso e igual
       #   funciona, pero aún así por las dudas es mejor declarar una variable de clase @@ en este caso.
     end
+
+    private
 
     # Devuelve un hash cuya clave es el número de día y valor el nombre del día. Ej.: { 1=>"Monday", 2=>"Tuesday", ... }
     def day_numbers
