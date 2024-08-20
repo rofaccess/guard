@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# Obs.:
+# Se puede acceder al id de un fixture específico de la siguiente manera:
+# owner_id: <%= ActiveRecord::FixtureSet.identify(:recorrido_cl) %>
+one_cl_week_schedule:
+  week_number: 10
+  year: 2021
+  owner: one (Client)
+  type: ClientWeekSchedule

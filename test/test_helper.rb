@@ -1,6 +1,7 @@
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
+require "utils/table_utils"
 
 module ActiveSupport
   class TestCase
@@ -11,52 +12,52 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
-    def client
-      "Recorrido.cl"
-    end
-
     def client_week_schedule_hash
-      {
-        "Monday" => { start_time: "19:00", end_time: "00:00" },
-        "Tuesday" => { start_time: "19:00", end_time: "00:00" },
-        "Wednesday" => { start_time: "19:00", end_time: "00:00" },
-        "Thursday" => { start_time: "19:00", end_time: "00:00" },
-        "Friday" => { start_time: "19:00", end_time: "00:00" },
-        "Saturday" => { start_time: "10:00", end_time: "00:00" },
-        "Sunday" => { start_time: "10:00", end_time: "00:00" }
-      }
-    end
-
-    def employee_1
-      "Ernesto"
-    end
-
-    def employee_2
-      "Bárbara"
-    end
-
-    def employee_3
-      "Benjamín"
+      [
+        { start_time: "19:00", end_time: "00:00", day: day_1 },
+        { start_time: "19:00", end_time: "00:00", day: day_2 },
+        { start_time: "19:00", end_time: "00:00", day: day_3 },
+        { start_time: "19:00", end_time: "00:00", day: day_4 },
+        { start_time: "19:00", end_time: "00:00", day: day_5 },
+        { start_time: "10:00", end_time: "00:00", day: day_6 },
+        { start_time: "10:00", end_time: "00:00", day: day_7 }
+      ]
     end
 
     def employees_week_schedules_hash
       [
-        { day_name: "Monday", start_time: "19:00", end_time: "00:00", employee: employee_3 },
-        { day_name: "Tuesday", start_time: "19:00", end_time: "00:00", employee: employee_1 },
-        { day_name: "Tuesday", start_time: "19:00", end_time: "00:00", employee: employee_2 },
-        { day_name: "Tuesday", start_time: "19:00", end_time: "00:00", employee: employee_3 },
-        { day_name: "Wednesday", start_time: "19:00", end_time: "00:00", employee: employee_2 },
-        { day_name: "Wednesday", start_time: "19:00", end_time: "00:00", employee: employee_3 },
-        { day_name: "Thursday", start_time: "19:00", end_time: "00:00", employee: employee_1 },
-        { day_name: "Thursday", start_time: "19:00", end_time: "00:00", employee: employee_2 },
-        { day_name: "Thursday", start_time: "19:00", end_time: "00:00", employee: employee_3 },
-        { day_name: "Friday", start_time: "19:00", end_time: "00:00", employee: employee_1 },
-        { day_name: "Friday", start_time: "19:00", end_time: "00:00", employee: employee_2 },
-        { day_name: "Saturday", start_time: "10:00", end_time: "15:00", employee: employee_1 },
-        { day_name: "Saturday", start_time: "18:00", end_time: "21:00", employee: employee_2 },
-        { day_name: "Saturday", start_time: "18:00", end_time: "00:00", employee: employee_3 },
-        { day_name: "Sunday", start_time: "10:00", end_time: "00:00", employee: employee_2 }
+        { start_time: "19:00", end_time: "00:00", day: day_1, employee: employee_3 },
+        { start_time: "19:00", end_time: "00:00", day: day_2, employee: employee_1 },
+        { start_time: "19:00", end_time: "00:00", day: day_2, employee: employee_2 },
+        { start_time: "19:00", end_time: "00:00", day: day_2, employee: employee_3 },
+        { start_time: "19:00", end_time: "00:00", day: day_3, employee: employee_2 },
+        { start_time: "19:00", end_time: "00:00", day: day_3, employee: employee_3 },
+        { start_time: "19:00", end_time: "00:00", day: day_4, employee: employee_1 },
+        { start_time: "19:00", end_time: "00:00", day: day_4, employee: employee_2 },
+        { start_time: "19:00", end_time: "00:00", day: day_4, employee: employee_3 },
+        { start_time: "19:00", end_time: "00:00", day: day_5, employee: employee_1 },
+        { start_time: "19:00", end_time: "00:00", day: day_5, employee: employee_2 },
+        { start_time: "10:00", end_time: "15:00", day: day_6, employee: employee_1 },
+        { start_time: "18:00", end_time: "21:00", day: day_6, employee: employee_2 },
+        { start_time: "18:00", end_time: "00:00", day: day_6, employee: employee_3 },
+        { start_time: "10:00", end_time: "00:00", day: day_7, employee: employee_2 }
       ]
     end
+
+    def week_number = 11
+    def year = 2020
+    def week_schedule_title = "Semana #{week_number} - #{year}"
+    def client_1 = clients(:recorrido_cl)
+    def employee_1 = employees(:ernesto)
+    def employee_2 = employees(:barbara)
+    def employee_3 = employees(:benjamin)
+
+    def day_1 = days(:monday)
+    def day_2 = days(:tuesday)
+    def day_3 = days(:wednesday)
+    def day_4 = days(:thursday)
+    def day_5 = days(:friday)
+    def day_6 = days(:saturday)
+    def day_7 = days(:sunday)
   end
 end

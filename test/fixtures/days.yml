@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+monday:
+  name: Monday
+  order: 1
+
+tuesday:
+  name: Tuesday
+  order: 2
+
+wednesday:
+  name: Wednesday
+  order: 3
+
+thursday:
+  name: Thursday
+  order: 4
+
+friday:
+  name: Friday
+  order: 5
+
+saturday:
+  name: Saturday
+  order: 6
+
+sunday:
+  name: Sunday
+  order: 7

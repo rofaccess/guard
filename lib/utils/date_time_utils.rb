@@ -16,7 +16,7 @@ class DateTimeUtils
     #   =>
     def build_time(week_number, year, day_name, time)
       date = build_date(week_number, year, day_name)
-      Time.parse("#{date} #{time}")
+      Time.zone.parse("#{date} #{time}")
     end
   end
 end
