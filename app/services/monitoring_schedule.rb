@@ -1,6 +1,6 @@
 class MonitoringSchedule
   private attr_accessor :week_number, :year, :client, :shifts, :shifts_hours, :tentative_schedules,
-                        :tentative_schedules_hours, :schedule
+                        :tentative_schedules_hours, :selected_schedule_hours, :schedule
 
   def initialize(week_number, year, client)
     self.week_number = week_number
@@ -20,8 +20,25 @@ class MonitoringSchedule
     build_tentative_schedules_hours
     solution, solution_index = get_optimal_solution
     selected_schedule = tentative_schedules[solution_index]
-    selected_schedule_hours = tentative_schedules_hours[solution_index]
+    self.selected_schedule_hours = tentative_schedules_hours[solution_index]
     build_schedule(selected_schedule)
+  end
+
+  def to_s
+    result = "Horas\n"
+
+    selected_schedule_hours.each do | employee, hour |
+      result << "#{employee}: #{hour}\n"
+    end
+
+    schedule.each do |day_name, shifts|
+      result << "#{day_name}\n"
+      shifts.each do |shift|
+        result << shift.join(": ")
+        result << "\n"
+      end
+    end
+    result
   end
 
   private
@@ -148,7 +165,7 @@ class MonitoringSchedule
     starts_at = day_schedule.starts_at
     while starts_at < day_schedule.ends_at
       ends_at = starts_at + 3600
-      time_block = "#{day_schedule.day_name} #{starts_at.strftime("%H:%M")} - #{ends_at.strftime("%H:%M")}"
+      time_block = "#{starts_at.strftime("%H:%M")} - #{ends_at.strftime("%H:%M")}"
       yield(time_block)
       starts_at = ends_at
     end
