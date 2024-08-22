@@ -5,26 +5,11 @@ class MonitoringSchedule
     self.week_number = week_number
     self.year = year
     self.client = client
-    self.schedule = build_empty_schedule
+    self.schedule = {}
   end
 
   def build
-    Day.all.each do |day|
-      day_schedules = schedule[day.name]
-      employees_week_schedules.each do |_, employee_week_schedule|
-        day_schedule = employee_week_schedule.get_day_schedule(day)
-        next unless day_schedule
 
-        if day_schedules.empty?
-          day_schedules << day_schedule
-        else
-          a = 2
-        end
-        a = 2
-
-      end
-    end
-    a = 2
   end
 
   private
@@ -39,30 +24,13 @@ class MonitoringSchedule
       EmployeeWeekSchedule.includes(:day_schedules).where(week_number: week_number, year: year).index_by(&:owner_id)
   end
 
-  ##
-  # Retorna un hash con los días de la semana como claves y seteando un arreglo vacío en los valores
-  def build_empty_schedule
-    day_names.map { |day_name| [ day_name, [] ] }.to_h
-  end
-
-  def day_names
-    Day.pluck(:name)
-  end
-  #
-  def assigntments_schedules_set
-    # Tengo que procesar primero los disponibilidades segun solapamientos para luego combinar
-    # necesito una combinatoria de disponibilidades de cada dia?
-    monday = employee_availability_schedule["Monday"]
-    tuesday = employee_availability_schedule["Tuesday"]
-    wednesday = employee_availability_schedule["Wednesday"]
-    thursday = employee_availability_schedule["Thursday"]
-    friday = employee_availability_schedule["Friday"]
-    saturday = employee_availability_schedule["Saturday"]
-    sunday = employee_availability_schedule["Sunday"]
-    combinations = monday.product(tuesday, wednesday, thursday, friday, saturday, sunday)
-    employee_availability_schedule.each do |day, employees_availables|
-      a = 2
-    end
-    a = 2
+  def employees_day_schedules
+    @employees_day_schedules_by_day ||=
+      DaySchedule.joins(:week_schedule, :day)
+                 .joins("inner join employees on employees.id = week_schedules.owner_id")
+                 .where(week_schedules: { type: "EmployeeWeekSchedule", week_number: week_number, year: year })
+                 .select("day_schedules.*, week_schedules.owner_id as employee_id, days.name as day_name")
+                 .order("days.order, employees.created_at")
+                 .group_by(&:day_name)
   end
 end

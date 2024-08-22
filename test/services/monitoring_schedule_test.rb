@@ -29,7 +29,7 @@ class MonitoringScheduleTest < ActiveSupport::TestCase
     assert(week_schedule.save)
   end
 
-  def monitoring_schedule_hash
+  def expected_result_hash
     {
       "Monday" => [
         { start_time: "19:00", end_time: "00:00", employee_id: "Benjamín" }

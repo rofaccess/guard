@@ -5,6 +5,7 @@
 2. Un cliente no puede tener más de un rango de tiempo a monitorear en un mismo día.
 3. Por cada día de la semana se define un rango de tiempo que el empleado puede cubrir.
 4. Un empleado no puede tener más de un rango de tiempo (o turnos) para un mismo día.
+5. El rango de tiempo de un empleado no puede cortarse, es decir, no se puede aprovechar parte de su disponibilidad.
 5. El rango de monitoreo y disponibilidad debe ser de un mínimo de una hora.
 
 ## Posibles Mejoras
