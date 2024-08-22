@@ -1,3 +1,4 @@
+require "utils/date_time_utils"
 class MonitoringSchedule
   attr_accessor :schedule, :schedule_hours
   private attr_accessor :week_number, :year, :client, :shifts, :shifts_hours, :tentative_schedules,
@@ -40,6 +41,20 @@ class MonitoringSchedule
       end
     end
     result
+  end
+
+  def client_name
+    client.name
+  end
+
+  def week
+    "#{week_number} del #{year}"
+  end
+
+  def range
+    starts_at = DateTimeUtils.build_time(week_number, year, "Monday", "00:00")
+    ends_at = DateTimeUtils.build_time(week_number, year, "Sunday", "00:00")
+    "#{starts_at.strftime("%d-%m-%Y")} al #{ends_at.strftime("%d-%m-%Y")}"
   end
 
   private

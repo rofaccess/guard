@@ -19,12 +19,12 @@ Client.import(clients, on_duplicate_key_ignore: true)
 
 # Create employees
 employees = [
-  { name: "Benjamín" },
-  { name: "Bárbara" },
-  { name: "Ernesto" }
+  { name: "Benjamín", color_class: "has-background-info-light" },
+  { name: "Bárbara", color_class: "has-background-danger-light" },
+  { name: "Ernesto", color_class: "has-background-warning-light" }
 ]
 
-Employee.import(employees, on_duplicate_key_ignore: true)
+Employee.import(employees, on_duplicate_key_update: { conflict_target: [ :name ], columns: [ :color_class ] })
 
 # Create days
 days = []

@@ -1,9 +1,13 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
-<%= @schedule %>
-
 <div id="app">
-  <p>{{ message }}</p>
-
-  <button-counter></button-counter>
+  <section class="section">
+    <h1 class="title">Guard App</h1>
+    <h2 class="subtitle">
+      Aplicación de monitoreo de turnos de empleados, asegurando <strong>un equilibrio de horas asignadas</strong> y
+      <strong>minimizando la cantidad de saltos de turno por día</strong>, acorde a la disponibilidad de los empleados.
+    </h2>
+    <br>
+    <week-schedule-summary :summary="<%= @summary %>" :employee-colors="<%= @employee_colors %>"></week-schedule-summary>
+    <br>
+    <week-schedule :schedule="<%= @schedule %>" :schedule-hours="<%= @schedule_hours %>" :employee-colors="<%= @employee_colors %>"></week-schedule>
+  </section>
 </div>

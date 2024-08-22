@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_20_054357) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_22_204750) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -45,6 +45,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_20_054357) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "color_class"
     t.index ["name"], name: "index_employees_on_name", unique: true
   end
 
