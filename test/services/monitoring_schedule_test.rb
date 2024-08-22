@@ -5,10 +5,14 @@ class MonitoringScheduleTest < ActiveSupport::TestCase
   YEAR = 2020
 
   test "build schedule" do
-    create_client_week_schedule
-    create_employees_week_schedules
+    init_data
     monitoring_schedule = MonitoringSchedule.new(WEEK_NUMBER, YEAR, client_1).build
     assert_equal("", monitoring_schedule.to_s)
+  end
+
+  def init_data
+    create_client_week_schedule
+    create_employees_week_schedules
   end
 
   def create_client_week_schedule
