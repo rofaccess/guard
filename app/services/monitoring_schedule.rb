@@ -1,6 +1,7 @@
 class MonitoringSchedule
+  attr_accessor :schedule, :schedule_hours
   private attr_accessor :week_number, :year, :client, :shifts, :shifts_hours, :tentative_schedules,
-                        :tentative_schedules_hours, :selected_schedule_hours, :schedule
+                        :tentative_schedules_hours
 
   def initialize(week_number, year, client)
     self.week_number = week_number
@@ -20,14 +21,14 @@ class MonitoringSchedule
     build_tentative_schedules_hours
     solution, solution_index = get_optimal_solution
     selected_schedule = tentative_schedules[solution_index]
-    self.selected_schedule_hours = tentative_schedules_hours[solution_index]
+    self.schedule_hours = tentative_schedules_hours[solution_index]
     build_schedule(selected_schedule)
   end
 
   def to_s
     result = "Horas\n"
 
-    selected_schedule_hours.each do | employee, hour |
+    schedule_hours.each do | employee, hour |
       result << "#{employee}: #{hour}\n"
     end
 

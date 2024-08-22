@@ -32,3 +32,6 @@ gem "or-tools", "~> 0.12.0", git: "https://github.com/rofaccess/or-tools-ruby"
 
 # Ruby ASCII Table Generator, simple and feature rich [https://github.com/tj/terminal-table]
 gem "terminal-table", "~> 3.0"
+
+# A library for bulk insertion of data into your database using ActiveRecord [https://github.com/zdennis/activerecord-import]
+gem "activerecord-import", "~> 1.7"

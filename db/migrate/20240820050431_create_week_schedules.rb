@@ -8,5 +8,7 @@ class CreateWeekSchedules < ActiveRecord::Migration[7.2]
 
       t.timestamps
     end
+
+    add_index :week_schedules, %i[week_number year owner_id owner_type], unique: true
   end
 end

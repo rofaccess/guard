@@ -57,6 +57,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_20_054357) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["owner_type", "owner_id"], name: "index_week_schedules_on_owner"
+    t.index ["week_number", "year", "owner_id", "owner_type"], name: "idx_on_week_number_year_owner_id_owner_type_a171f2c4a2", unique: true
   end
 
   add_foreign_key "day_schedules", "days"
