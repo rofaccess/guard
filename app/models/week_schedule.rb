@@ -62,6 +62,7 @@ class WeekSchedule < ApplicationRecord
         year: year,
         owner: owner
       )
+      return week_schedule unless schedule_hash
 
       schedule_hash.each do |day_schedule|
         week_schedule.set_day_schedule(day_schedule[:day], day_schedule[:start_time], day_schedule[:end_time])

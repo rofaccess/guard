@@ -1,53 +1,69 @@
 class MonitoringSchedule
-  private attr_accessor :week_number, :year, :client, :shifts, :schedule
+  private attr_accessor :week_number, :year, :client, :shifts, :shifts_hours, :tentative_schedules, :schedule
 
   def initialize(week_number, year, client)
     self.week_number = week_number
     self.year = year
     self.client = client
     self.shifts = {}
+    self.shifts_hours = {}
+    self.tentative_schedules = []
     self.schedule = {}
   end
 
   def build
     build_shifts
+    build_shift_hours
+    build_tentative_schedules
     a = 2
   end
 
   private
 
   def build_shifts
+    unallocated = "Sin Asignar"
     Day.pluck(:name).each do |day_name|
       client_day_schedule = client_day_schedules[day_name]
+      next unless client_day_schedule
+
       time_blocks = {}
 
       build_time_blocks(client_day_schedule) do |time_block|
         time_blocks[time_block] = []
       end
 
-      employees_day_schedules[day_name].each do |employee_day_schedule|
+      employees_days_schedules = employees_day_schedules[day_name]
+      next unless employees_days_schedules
+
+      employees_days_schedules.each do |employee_day_schedule|
         build_time_blocks(employee_day_schedule) do |time_block|
           time_blocks[time_block] << employee_day_schedule.employee_name
         end
       end
 
       shift_number = 1
-      shifts = { shift_number => {} }
+      shift_name = "#{day_name}-#{shift_number}"
+      shifts = { shift_name => {} }
 
       time_blocks.each do |time_block, employees|
         if employees.size == 0
-          shifts[shift_number][time_block] = nil
+          shifts[shift_name][time_block] = unallocated
         elsif employees.size == 1
           shifts.size.times do |index|
-            shifts[index + 1][time_block] = employees.first
+            new_shift_name = "#{day_name}-#{index + 1}"
+            shifts[new_shift_name][time_block] = employees.first
           end
         else
           employees.each_with_index do |employee, index|
-            shifts[shift_number][time_block] = employee unless shifts[shift_number][time_block]
+            shifts[shift_name][time_block] = employee unless shifts[shift_name][time_block]
+
             new_shift_number = shift_number + index + 1
+            new_shift_name = "#{day_name}-#{new_shift_number}"
             next if new_shift_number == employees.size + 1
-            shifts[new_shift_number] = shifts[shift_number].dup unless shifts[new_shift_number]
-            shifts[new_shift_number][time_block] = employees[index + 1]
+
+            shifts[new_shift_name] = shifts[shift_name].dup unless shifts[new_shift_name]
+            next_employee = employees[index + 1]
+            shifts[new_shift_name][time_block] = next_employee
           end
         end
       end
@@ -56,11 +72,32 @@ class MonitoringSchedule
     end
   end
 
+  def build_shift_hours
+    shifts.each do |_, shifts|
+      shifts.each do |shift_name, shift|
+        shifts_hours[shift_name] = shift.values.tally
+      end
+    end
+  end
+
+  def build_tentative_schedules
+    tentative_shifts = []
+
+    shifts.each_value do |shifts|
+      tentative_shifts << shifts.keys
+    end
+
+    # .product no devuelve ningun resultado si uno de los arreglos esta vacío, por eso hay que filtrar los arreglos vacíos
+    filtered_tentative_shifts = tentative_shifts.reject(&:empty?)
+
+    self.tentative_schedules = filtered_tentative_shifts.shift.product(*filtered_tentative_shifts) if filtered_tentative_shifts.any?
+  end
+
   def build_time_blocks(day_schedule)
     starts_at = day_schedule.starts_at
     while starts_at < day_schedule.ends_at
       ends_at = starts_at + 3600
-      time_block = "#{starts_at.strftime("%H:%M")} - #{ends_at.strftime("%H:%M")}"
+      time_block = "#{day_schedule.day_name} #{starts_at.strftime("%H:%M")} - #{ends_at.strftime("%H:%M")}"
       yield(time_block)
       starts_at = ends_at
     end
