@@ -1,5 +1,6 @@
 class MonitoringSchedule
-  private attr_accessor :week_number, :year, :client, :shifts, :shifts_hours, :tentative_schedules, :schedule
+  private attr_accessor :week_number, :year, :client, :shifts, :shifts_hours, :tentative_schedules,
+                        :tentative_schedules_hours, :schedule
 
   def initialize(week_number, year, client)
     self.week_number = week_number
@@ -8,6 +9,7 @@ class MonitoringSchedule
     self.shifts = {}
     self.shifts_hours = {}
     self.tentative_schedules = []
+    self.tentative_schedules_hours = {}
     self.schedule = {}
   end
 
@@ -15,6 +17,12 @@ class MonitoringSchedule
     build_shifts
     build_shift_hours
     build_tentative_schedules
+    build_tentative_schedules_hours
+    solution, solution_index = get_optimal_solution
+    selected_schedule = tentative_schedules[solution_index]
+    selected_schedule_hours = tentative_schedules_hours[solution_index]
+
+
     a = 2
   end
 
@@ -91,6 +99,51 @@ class MonitoringSchedule
     filtered_tentative_shifts = tentative_shifts.reject(&:empty?)
 
     self.tentative_schedules = filtered_tentative_shifts.shift.product(*filtered_tentative_shifts) if filtered_tentative_shifts.any?
+  end
+
+  def build_tentative_schedules_hours
+    tentative_schedules.each_with_index do |tentative_schedule, index|
+      tentative_schedules_hours[index] = {}
+      tentative_schedule.each do |shift|
+        shifts_hours[shift].each do |employee, total_hour|
+          tentative_schedules_hours[index][employee] ||= 0
+          tentative_schedules_hours[index][employee] += total_hour
+        end
+      end
+    end
+  end
+
+  def get_optimal_solution
+    arrays = []
+    tentative_schedules_hours.each do |index, tentative_schedule_hour|
+      arrays << tentative_schedule_hour.values
+    end
+    # From: ChatGPT
+    # Le pregunte:
+    # Teniendo los conjuntos [15, 19, 16], [10, 19, 21], [1, 2, 20], quiero elegir uno de esos arreglos bajo estas condiciones:
+    # La diferencia entre los numeros en cada arreglo no debe ser demasiada. Ejemplo. 15, 19 y 16 no tienen mucha diferencia, pero 1, 2 y 20 tienen  mucha diferencia.
+    # De entre todos tambien quiero elegir aquel arreglo cuya suma de su contenido se mayor a la suma de los contenidos de los otros arreglos
+
+    # Calcular la suma y la máxima diferencia para cada arreglo
+    arrays_with_sums_and_differences = arrays.map do |array|
+      sum = array.sum
+      difference = max_difference(array)
+      { array: array, sum: sum, difference: difference }
+    end
+
+    # Filtrar arreglos con la suma máxima
+    max_sum = arrays_with_sums_and_differences.map { |h| h[:sum] }.max
+    filtered_arrays = arrays_with_sums_and_differences.select { |h| h[:sum] == max_sum }
+
+    # Elegir el arreglo con la menor diferencia
+    chosen_array = filtered_arrays.min_by { |h| h[:difference] }[:array]
+    solution_index = arrays.index(chosen_array)
+    [ chosen_array, solution_index ]
+  end
+
+  # Method para calcular la máxima diferencia en un arreglo
+  def max_difference(array)
+    array.max - array.min
   end
 
   def build_time_blocks(day_schedule)
