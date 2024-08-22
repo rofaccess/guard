@@ -21,9 +21,7 @@ class MonitoringSchedule
     solution, solution_index = get_optimal_solution
     selected_schedule = tentative_schedules[solution_index]
     selected_schedule_hours = tentative_schedules_hours[solution_index]
-
-
-    a = 2
+    build_schedule(selected_schedule)
   end
 
   private
@@ -153,6 +151,13 @@ class MonitoringSchedule
       time_block = "#{day_schedule.day_name} #{starts_at.strftime("%H:%M")} - #{ends_at.strftime("%H:%M")}"
       yield(time_block)
       starts_at = ends_at
+    end
+  end
+
+  def build_schedule(selected_schedule)
+    selected_schedule.each do |shift|
+      day_name = shift.split("-").first
+      schedule[day_name] = shifts[day_name][shift]
     end
   end
 
