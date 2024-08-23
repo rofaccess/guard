@@ -1,0 +1,52 @@
+<%= form_with(model: @week_schedule, local: true) do |form| %>
+  <% if @week_schedule.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@week_schedule.errors.count, "error") %> impidieron el guardado:</h2>
+      <ul>
+        <% @week_schedule.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form.hidden_field :owner_id, value: @week_schedule.owner_id %>
+  <div class="columns">
+    <div class="column is-four-fifths">
+      <h1 class="title">Editar Disponibilidad</h1>
+    </div>
+    <div class="column">
+      <%= form.submit "Guardar Cambios", class: 'button is-primary' %>
+    </div>
+  </div>
+
+  <div class="grid">
+    <%# @days.each do |day| %>
+      <%# day_schedule = @week_schedule.get_day_schedule(day) %>
+
+        <%= form.fields_for :day_schedules do |day_schedule_form| %>
+        <div class="cell">
+          <%#= day_schedule_form.hidden_field :id, value: day_schedule.try(:id) %>
+          <%#= day_schedule_form.hidden_field :day_id, value: day.id %>
+
+          <div class="field"><h2 class="subtitle"><%= @days[day_schedule_form.object.day_id] %></h2></div>
+
+          <div class="field">
+            <%= day_schedule_form.label :starts_at, "Hora Inicio", { class: "label" } %>
+            <div class="control">
+              <%#= day_schedule_form.time_select :starts_at, {default: day_schedule.try(:starts_at)}, { class: "select" } %>
+              <%= day_schedule_form.time_select :starts_at, {}, { class: "select" } %>
+            </div>
+          </div>
+
+          <div class="field">
+            <%= day_schedule_form.label :ends_at, "Hora Fin", { class: "label" } %>
+            <div class="control">
+              <%#= day_schedule_form.time_select :ends_at, {default: day_schedule.try(:ends_at)}, { class: "select" } %>
+              <%= day_schedule_form.time_select :ends_at, {}, { class: "select" } %>
+            </div>
+          </div>
+        </div>
+        <% end %>
+    <%# end %>
+  </div>
+<% end %>

@@ -2,7 +2,8 @@
   <section class="section">
     <h1 class="title">Guard App</h1>
     <h2 class="subtitle">
-      Editar Disponibilidad
+      Las tablas mostradas solo listan los datos, no permiten edición. Para editar vaya más abajo e indique los rangos
+      de tiempo en el formulario y haga click en el botón Guardar.
     </h2>
     <br>
     <div class="columns">
@@ -15,5 +16,7 @@
     </div>
     <br>
     <week-schedule :schedule="<%= @schedule %>" :employee-colors="<%= @employee_colors %>"></week-schedule>
+    <hr>
+    <%= render "form" %>
   </section>
 </div>

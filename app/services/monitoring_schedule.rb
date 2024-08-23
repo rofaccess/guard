@@ -78,7 +78,7 @@ class MonitoringSchedule
 
       employees_days_schedules.each do |employee_day_schedule|
         build_time_blocks(employee_day_schedule) do |time_block|
-          time_blocks[time_block] << employee_day_schedule.employee_name
+          time_blocks[time_block] << employee_day_schedule.employee_name if time_blocks[time_block]
         end
       end
 

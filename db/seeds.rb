@@ -61,21 +61,33 @@ employee_3 = Employee.find_by(name: "Benjamín")
 
 employees_week_schedules_hash =
   [
+    { start_time: "01:00", end_time: "01:00", day: days[1], employee: employee_1 }, # Relleno
+    { start_time: "01:00", end_time: "01:00", day: days[1], employee: employee_2 }, # Relleno
     { start_time: "19:00", end_time: "00:00", day: days[1], employee: employee_3 },
+
     { start_time: "19:00", end_time: "00:00", day: days[2], employee: employee_1 },
     { start_time: "19:00", end_time: "00:00", day: days[2], employee: employee_2 },
     { start_time: "19:00", end_time: "00:00", day: days[2], employee: employee_3 },
+
+    { start_time: "01:00", end_time: "01:00", day: days[3], employee: employee_1 }, # Relleno
     { start_time: "19:00", end_time: "00:00", day: days[3], employee: employee_2 },
     { start_time: "19:00", end_time: "00:00", day: days[3], employee: employee_3 },
+
     { start_time: "19:00", end_time: "00:00", day: days[4], employee: employee_1 },
     { start_time: "19:00", end_time: "00:00", day: days[4], employee: employee_2 },
     { start_time: "19:00", end_time: "00:00", day: days[4], employee: employee_3 },
+
     { start_time: "19:00", end_time: "00:00", day: days[5], employee: employee_1 },
     { start_time: "19:00", end_time: "00:00", day: days[5], employee: employee_2 },
+    { start_time: "01:00", end_time: "01:00", day: days[5], employee: employee_3 }, # Relleno
+
     { start_time: "10:00", end_time: "15:00", day: days[6], employee: employee_1 },
     { start_time: "18:00", end_time: "21:00", day: days[6], employee: employee_2 },
     { start_time: "18:00", end_time: "00:00", day: days[6], employee: employee_3 },
-    { start_time: "10:00", end_time: "00:00", day: days[7], employee: employee_2 }
+
+    { start_time: "01:00", end_time: "01:00", day: days[7], employee: employee_1 }, # Relleno
+    { start_time: "10:00", end_time: "00:00", day: days[7], employee: employee_2 },
+    { start_time: "01:00", end_time: "01:00", day: days[7], employee: employee_3 } # Relleno
   ]
 
 grouped_week_schedule_hash = employees_week_schedules_hash.group_by{ |shift| shift[:employee] }

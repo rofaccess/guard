@@ -23,7 +23,7 @@ export default {
     <div class="dropdown-menu" id="dropdown-menu4" role="menu">
       <div class="dropdown-content">
         <div class="dropdown-item">
-          <a v-for="(value, key) in data" :href="`/week_schedule/${key}/edit`" :key="key" class="dropdown-item"> {{ value }} </a>
+          <a v-for="(value, key) in data" :href="`/employee_week_schedule/${key}/edit`" :key="key" class="dropdown-item"> {{ value }} </a>
         </div>
       </div>
     </div>
