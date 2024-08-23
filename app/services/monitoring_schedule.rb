@@ -1,13 +1,15 @@
 require "utils/date_time_utils"
 class MonitoringSchedule
   attr_accessor :schedule, :schedule_hours
-  private attr_accessor :week_number, :year, :client, :shifts, :shifts_hours, :tentative_schedules,
-                        :tentative_schedules_hours
+  private attr_accessor :week_number, :year, :client, :client_day_schedules, :employees_day_schedules, :shifts,
+                        :shifts_hours, :tentative_schedules, :tentative_schedules_hours
 
-  def initialize(week_number, year, client)
+  def initialize(week_number, year, client, client_day_schedules, employees_day_schedules)
     self.week_number = week_number
     self.year = year
     self.client = client
+    self.client_day_schedules = client_day_schedules
+    self.employees_day_schedules = employees_day_schedules
     self.shifts = {}
     self.shifts_hours = {}
     self.tentative_schedules = []
@@ -192,40 +194,5 @@ class MonitoringSchedule
       day_name = shift.split("-").first
       schedule[day_name] = shifts[day_name][shift]
     end
-  end
-
-  def client_week_schedules
-    @client_week_schedules ||=
-      ClientWeekSchedule.includes(:day_schedules).where(week_number: week_number, year: year, owner_id: client.id)
-  end
-
-  def employees_week_schedules
-    @employees_week_schedules ||=
-      EmployeeWeekSchedule.includes(:day_schedules).where(week_number: week_number, year: year).index_by(&:owner_id)
-  end
-
-  def employees_count
-    @employees_count ||=
-      employees_week_schedules.size
-  end
-
-  def client_day_schedules
-    @client_day_schedules_by_day ||=
-      DaySchedule.joins(:week_schedule, :day)
-                 .joins("inner join clients on clients.id = week_schedules.owner_id")
-                 .where(week_schedules: { type: "ClientWeekSchedule", week_number: week_number, year: year, owner_id: client.id })
-                 .select("day_schedules.*, week_schedules.owner_id as client_id, days.name as day_name")
-                 .order("days.order, clients.created_at")
-                 .index_by(&:day_name)
-  end
-
-  def employees_day_schedules
-    @employees_day_schedules_by_day ||=
-      DaySchedule.joins(:week_schedule, :day)
-                 .joins("inner join employees on employees.id = week_schedules.owner_id")
-                 .where(week_schedules: { type: "EmployeeWeekSchedule", week_number: week_number, year: year })
-                 .select("day_schedules.*, week_schedules.owner_id as employee_id, employees.name as employee_name, days.name as day_name")
-                 .order("days.order, employees.created_at")
-                 .group_by(&:day_name)
   end
 end

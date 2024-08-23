@@ -6,7 +6,7 @@ class MonitoringScheduleTest < ActiveSupport::TestCase
 
   test "build schedule" do
     init_data
-    monitoring_schedule = MonitoringSchedule.new(WEEK_NUMBER, YEAR, client_1)
+    monitoring_schedule = MonitoringSchedule.new(WEEK_NUMBER, YEAR, client_1, client_day_schedules(client_1), employees_day_schedules)
     monitoring_schedule.build
     puts monitoring_schedule
     assert(true)
@@ -33,6 +33,14 @@ class MonitoringScheduleTest < ActiveSupport::TestCase
 
     week_schedule = EmployeeWeekSchedule.build_from_hash(employee_3, WEEK_NUMBER, YEAR, grouped_week_schedule_hash[employee_3])
     assert(week_schedule.save)
+  end
+
+  def client_day_schedules(client)
+    ClientWeekSchedule.get(WEEK_NUMBER, YEAR, client)
+  end
+
+  def employees_day_schedules
+    EmployeeWeekSchedule.get(WEEK_NUMBER, YEAR)
   end
 
   def expected_result_hash
