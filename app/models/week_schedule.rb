@@ -35,7 +35,7 @@ class WeekSchedule < ApplicationRecord
     # Cuando end_time es 00:00 es necesario agregarle un día para que el final del día day_name sea el inicio del
     # siguiente día, si no se hace este cambio entonces ends_at no tendrá la fecha correcta en este caso haciendo que
     # sea menor o igual a starts_at
-    ends_at += 1.day if end_time == "00:00"
+    ends_at += (1.day - 1.second) if end_time == "00:00"
     day_schedule = DaySchedule.new(day: day, starts_at: starts_at, ends_at: ends_at)
     self.day_schedules << day_schedule
     self.schedule[day.id] = day_schedule # Guarda el valor en un hash para un acceso rápido
