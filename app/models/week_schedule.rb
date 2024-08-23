@@ -14,6 +14,7 @@ require "utils/date_time_utils"
 class WeekSchedule < ApplicationRecord
   belongs_to :owner, polymorphic: true
   has_many :day_schedules, dependent: :destroy
+  accepts_nested_attributes_for :day_schedules, allow_destroy: true
 
   private attr_accessor :schedule
 

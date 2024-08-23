@@ -2,14 +2,18 @@
   <section class="section">
     <h1 class="title">Guard App</h1>
     <h2 class="subtitle">
-      Editar Disponibilidad de <%= @employee.name %>
+      Editar Disponibilidad
     </h2>
-    <hr>
-    <div class="buttons">
-      <%= link_to 'Cancelar', root_path, class: 'button' %>
-      <%= link_to 'Guardar', root_path, class: 'button is-primary' %>
+    <br>
+    <div class="columns">
+      <div class="column is-four-fifths">
+        <week-schedule-summary :summary="<%= @summary %>" :employee-colors="<%= @employee_colors %>"></week-schedule-summary>
+      </div>
+      <div class="column">
+        <%= link_to '<- Vista Principal', root_path, class: 'button' %>
+      </div>
     </div>
-    <hr>
+    <br>
     <week-schedule :schedule="<%= @schedule %>" :employee-colors="<%= @employee_colors %>"></week-schedule>
   </section>
 </div>
