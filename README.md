@@ -56,6 +56,7 @@ para comprobar el algoritmo con los datos de ejemplo dados en la prueba. Además
 ## Pasos de Instalación
 ```sh
 bundle install
+rake assets:precompile
 rake db:create
 rake db:migrate
 rake db:seed
