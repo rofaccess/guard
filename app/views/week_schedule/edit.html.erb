@@ -1,0 +1,11 @@
+<section class="section">
+  <h1 class="title">Guard App</h1>
+  <h2 class="subtitle">
+    Editar Disponibilidad
+  </h2>
+  <hr>
+  <week-schedule :schedule="<%= @schedule %>" :employee-colors={}></week-schedule>
+
+  <%= link_to 'Cancelar', root_path, class: 'button' %>
+  <%= link_to 'Guardar', root_path, class: 'button is-primary' %>
+</section>

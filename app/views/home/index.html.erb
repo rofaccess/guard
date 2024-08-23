@@ -6,8 +6,16 @@
       <strong>minimizando la cantidad de saltos de turno por día</strong>, acorde a la disponibilidad de los empleados.
     </h2>
     <br>
-    <week-schedule-summary :summary="<%= @summary %>" :employee-colors="<%= @employee_colors %>"></week-schedule-summary>
+    <div class="columns">
+      <div class="column is-four-fifths">
+        <week-schedule-summary :summary="<%= @summary %>" :employee-colors="<%= @employee_colors %>"></week-schedule-summary>
+      </div>
+      <div class="column">
+        <dropdown :data="<%= @employees %>"></dropdown>
+      </div>
+    </div>
+
     <br>
-    <week-schedule :schedule="<%= @schedule %>" :schedule-hours="<%= @schedule_hours %>" :employee-colors="<%= @employee_colors %>"></week-schedule>
+    <week-schedule :schedule="<%= @schedule %>" :employee-colors="<%= @employee_colors %>"></week-schedule>
   </section>
 </div>

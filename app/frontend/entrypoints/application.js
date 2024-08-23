@@ -1,6 +1,7 @@
 import { createApp } from 'vue/dist/vue.esm-bundler';
 import WeekSchedule from '../components/WeekSchedule.vue'
 import WeekScheduleSummary from '../components/WeekScheduleSummary.vue'
+import Dropdown from '../components/Dropdown.vue'
 
 const app = createApp({
     data() {
@@ -12,6 +13,7 @@ const app = createApp({
 
 app.component('WeekSchedule', WeekSchedule)
 app.component('WeekScheduleSummary', WeekScheduleSummary)
+app.component('Dropdown', Dropdown)
 
 app.mount('#app');
 

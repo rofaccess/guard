@@ -5,6 +5,7 @@ class HomeController < ApplicationController
     monitoring_schedule.build
     @schedule = monitoring_schedule.schedule.to_json
     @summary = summary(monitoring_schedule)
+    @employees = Employee.pluck(:id, :name).to_h.to_json
     @employee_colors = Employee.pluck(:name, :color_class).to_h.to_json
   end
 
