@@ -34,4 +34,4 @@ gem "or-tools", "~> 0.12.0", git: "https://github.com/rofaccess/or-tools-ruby"
 gem "terminal-table", "~> 3.0"
 
 # A library for bulk insertion of data into your database using ActiveRecord [https://github.com/zdennis/activerecord-import]
-gem "activerecord-import", "~> 1.7"
+gem "activerecord-import", "~> 1.8"
